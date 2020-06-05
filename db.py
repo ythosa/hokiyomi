@@ -1,8 +1,7 @@
-import os
 from typing import Dict, List, Any
 import sqlite3
 
-conn = sqlite3.connect(os.path.join("db", "data.db"))
+conn = sqlite3.connect("./data.db")
 cursor = conn.cursor()
 
 
@@ -44,8 +43,11 @@ def get_cursor():
 
 def _init_db():
     """Init DB"""
-    with open("createdb.sql", "r") as f:
-        sql = f.read()
+    sql = """create table images(
+                    id integer primary key,
+                    group_id integer,
+                    image blob
+                );"""
     cursor.executescript(sql)
     conn.commit()
 

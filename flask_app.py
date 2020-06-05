@@ -46,9 +46,8 @@ def bot():
         match = re.match(patterns.ADDPIC, message_text)
         if match:
             attachments = body['attachments']
-            user_id = body['from_id']
             try:
-                commands.add_person_picture(user_id, attachments)
+                commands.add_person_picture(chat_id, attachments)
                 vk.messages.send(
                     message='Done 👌🏻',
                     random_id=get_random_id(),
@@ -60,5 +59,6 @@ def bot():
                     random_id=get_random_id(),
                     peer_id=chat_id
                 )
+            return 'ok'
 
     return 'ok'
