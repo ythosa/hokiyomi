@@ -54,7 +54,7 @@ def check_db_exists():
     """Checks whether the database is initialized; if not, initializes it"""
     cursor.execute(
         "SELECT name FROM sqlite_master "
-        "WHERE type='table' AND name='expense'"
+        "WHERE type='table' AND name='images'"
     )
     table_exists = cursor.fetchall()
     if table_exists:

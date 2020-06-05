@@ -4,7 +4,9 @@ import vk_api
 from vk_api.utils import get_random_id
 import re
 
+import commands
 import patterns
+from exceptions import InvalidAttachments
 from tokens import API_TOKEN, CONFIRMATION_CODE
 
 app = Flask(__name__)
@@ -26,17 +28,37 @@ def bot():
     if request_type == 'confirmation':
         return confirmation_code
     elif request_type == 'message_new':
-        message_text = data['object']["text"]
+        body = data['object']
+
+        message_text = body["text"]
         message_text = message_text.lower()
-        from_id = data['object']['peer_id']
+        chat_id = body['peer_id']
 
         match = re.match(patterns.ECHO, message_text)
         if match:
             vk.messages.send(
                 message='Hi :3',
                 random_id=get_random_id(),
-                peer_id=from_id
+                peer_id=chat_id
             )
             return 'ok'
+
+        match = re.match(patterns.ADDPIC, message_text)
+        if match:
+            attachments = body['attachments']
+            user_id = body['from_id']
+            try:
+                commands.add_person_picture(user_id, attachments)
+                vk.messages.send(
+                    message='Done 👌🏻',
+                    random_id=get_random_id(),
+                    peer_id=chat_id
+                )
+            except InvalidAttachments as e:
+                vk.messages.send(
+                    message=str(e),
+                    random_id=get_random_id(),
+                    peer_id=chat_id
+                )
 
     return 'ok'
