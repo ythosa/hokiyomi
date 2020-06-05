@@ -8,7 +8,7 @@ deploy:
 
 .PHONY: sql
 sql:
-	C:/sqlite/sqlite3 ./db/finance.db < createdb.sql
+	C:/sqlite/sqlite3 ./db/data.db < createdb.sql
 
 .PHONY: tokens
 tokens:
