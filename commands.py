@@ -49,28 +49,47 @@ def _get_picture_from_attachments(picture):
     return data
 
 
+def _write_img(bin):
+    with open('f.jpg', 'wb') as f:
+        f.write(bin)
+
+    with open('f.jpg', 'r') as f:
+        data = f.read()
+
+    return data
+
+
 def get_wall_newspaper(vk, chat_id):
     upload_server_url = vk.photos.getMessagesUploadServer(peer_id=chat_id)
+    # upload_server_url = json.loads(upload_server_url)
+    upload_server_url = upload_server_url["upload_url"]
 
     cursor = db.get_cursor()
     cursor.execute(
-        "select image"
+        "select image "
         "from images limit 1"
     )
     photo_bin = cursor.fetchone()[0]
 
-    files = {
+    photo_bin = _write_img(photo_bin)
+
+    photo = {
         'photo': photo_bin
     }
-    res = requests.post(upload_server_url, files=files)
-    res = json.loads(res)
+    headers = {
+        'content-type': "multipart/form-data",
+    }
+    res = requests.post(upload_server_url, files=photo, headers=headers)
+    res = json.loads(res.text)
+
+    print(res)
 
     photo = vk.photos.saveMessagesPhoto(
         server=res["server"],
         photo=res["photo"],
-        hash=res["hash"]
+        hash=res["hash"],
+        photos_list=[]
     )
     photo = json.loads(photo)
-
     photo_url = "photo" + photo["owner_id"] + "_" + photo["id"]
     return photo_url
