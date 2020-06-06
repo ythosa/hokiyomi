@@ -43,11 +43,8 @@ def get_cursor():
 
 def _init_db():
     """Init DB"""
-    sql = """create table images(
-                    id integer primary key,
-                    group_id integer,
-                    image blob
-                );"""
+    with open("createdb.sql", "r") as f:
+        sql = f.read()
     cursor.executescript(sql)
     conn.commit()
 
