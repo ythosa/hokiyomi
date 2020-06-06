@@ -6,7 +6,6 @@ import logging
 import commands
 import re
 import patterns
-# from exceptions import NotCorrectMessage, NotCorrectExpenseIDToDelete
 from tokens import API_TOKEN
 
 logging.basicConfig(level=logging.INFO)
@@ -36,14 +35,22 @@ async def add_element(message: types.Message):
     match = re.match(patterns.ADDPIC, cmd)
     if match:
         caption = cmd[5:]
-        images = message.photo
+        image = message.photo[-1]
 
-        for i in images:
-            f_path = await i.get_file()
-            f_path = f_path['file_path']
-            commands.add_person_picture(f_path, message.chat.id, caption)
+        f_path = await image.get_file()
+        f_path = f_path['file_path']
 
-        await message.answer(f"Done 👌 {message}")
+        # TODO raise exceptions
+        commands.add_person_picture(f_path, message.chat.id, caption)
+
+        await message.answer('Done 👌')
+
+
+@dp.message_handler(commands=['gen', 'generate'])
+async def generate_news_paper(message: types.Message):
+    chat_id = message.chat.id
+    # TODO ... generate photo
+    await bot.send_photo(chat_id, open('./output/output.jpg', 'rb'), 'Done 👌')
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)

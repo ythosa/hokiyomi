@@ -1,7 +1,5 @@
 import subprocess
 import sqlite3
-import json
-import requests
 
 import db
 from exceptions import InvalidAttachments
@@ -57,28 +55,3 @@ def get_wall_newspaper(vk, chat_id):
         "select image "
         "from images limit 1"
     )
-    photo_bin = cursor.fetchone()[0]
-
-    photo_bin = _write_img(photo_bin)
-
-    photo = {
-        'photo': photo_bin
-    }
-    headers = {
-        'content-type': "multipart/form-data",
-    }
-    res = requests.post(upload_server_url, files=photo, headers=headers)
-    res = json.loads(res.text)
-
-    print(res)
-
-    photo = vk.photos.saveMessagesPhoto(
-        server=res["server"],
-        photo=res["photo"],
-        hash=res["hash"],
-        photos_list=[]
-    )
-    photo = json.loads(photo)
-    photo_url = "photo" + photo["owner_id"] + "_" + photo["id"]
-
-    return photo_url
