@@ -23,6 +23,7 @@ async def send_welcome(message: types.Message):
         "Add a wall newspaper element: /add\n"
         "Generate a wall newspaper: /generate\n"
         "Remove last added element: /remove_last\n"
+        "Get list of backgrounds: /bg\n"
     )
 
 
@@ -37,18 +38,20 @@ async def add_element(message: types.Message):
 
     match = re.match(patterns.ADDPIC, cmd)
     if match:
-        caption = cmd[5:]
+        caption = match[2]
+        bg = match[3]
+
         image = message.photo[-1]
 
         f_path = await image.get_file()
         f_path = f_path['file_path']
 
         try:
-            commands.add_person_picture(f_path, message.chat.id, caption)
+            commands.add_person_picture(f_path, message.chat.id, caption, bg)
+
+            await message.answer('Done 👌')
         except InvalidAttachments as e:
             await message.answer(str(e))
-
-        await message.answer('Done 👌')
 
 
 @dp.message_handler(commands=['rvlast', 'remove_last'])
@@ -56,6 +59,16 @@ async def remove_last_element(message: types.Message):
     """Remove last added element from db"""
     commands.remove_last(message.chat.id)
     await message.answer('Done 👌')
+
+
+@dp.message_handler(commands=['bg', 'backgrounds'])
+async def remove_last_element(message: types.Message):
+    """Send all available backgrounds"""
+    message_answer = 'Available backgrounds:\n\n'
+    bgs = commands.get_backgrounds()
+    for bg in bgs:
+        message_answer += f'\t* {bg}\n'
+    await message.answer(message_answer)
 
 
 @dp.message_handler(commands=['gen', 'generate'])

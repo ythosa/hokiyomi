@@ -2,6 +2,7 @@ create table images(
     id integer primary key,
     group_id integer,
     caption text,
+    bg text,
     image blob
 );
 
