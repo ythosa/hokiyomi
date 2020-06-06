@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	FLASK_APP=flask_app.py flask run
+	python server.py
 
 .PHONY: deploy
 deploy:
