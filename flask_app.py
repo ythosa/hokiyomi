@@ -62,4 +62,14 @@ def bot():
                 )
             return 'ok'
 
+        match = re.match(patterns.GENERATEWALL, message_text)
+        if match:
+            pic = commands.get_wall_newspaper(vk, chat_id)
+            vk.messages.send(
+                message='Have fun :3',
+                random_id=get_random_id(),
+                peer_id=chat_id,
+                attachments=pic
+            )
+
     return 'ok'
