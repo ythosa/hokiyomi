@@ -20,12 +20,10 @@
 
 ## Description
 -    So cute and funny VK bot :3
+-    ML models developer: https://github.com/oringik
 
 
 ## FAQ
-*Q*: How can I get help on some command?  
-*A*: You can use command flag `--help|-h`, for example: `wis goto --help`
-
 *Q*: How can I help to develop this project?  
 *A*: You can put a :star: :3
 
