@@ -32,8 +32,17 @@ async def add_element(message: types.Message):
         cmd = str(message.caption)
     except KeyError:
         pass
+
     match = re.match(patterns.ADDPIC, cmd)
     if match:
+        caption = cmd[5:]
+        images = message.photo
+
+        for i in images:
+            f_path = await i.get_file()
+            f_path = f_path['file_path']
+            commands.add_person_picture(f_path, message.chat.id, caption)
+
         await message.answer(f"Done 👌 {message}")
 
 if __name__ == '__main__':
