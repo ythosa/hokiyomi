@@ -1,8 +1,10 @@
+import base64
 import subprocess
-import sqlite3
+# import sqlite3
 
-import db
+# import db
 from exceptions import InvalidAttachments
+import test_db
 
 
 def add_person_picture(group_id, attachments):
@@ -14,11 +16,14 @@ def add_person_picture(group_id, attachments):
 
     if pic:
         pic = _get_picture_from_attachments(pic)
-        pic_binary = sqlite3.Binary(pic)
-        db.insert("images", {
-            "group_id": group_id,
-            "image": pic_binary
-        })
+        # pic_binary = sqlite3.Binary(pic)
+        # db.insert("images", {
+        #     "group_id": group_id,
+        #     "image": pic_binary
+        # })
+        # pic = base64.b64encode(pic)
+
+        test_db.add_group_pic(group_id, str(pic))
     else:
         raise InvalidAttachments("You didn't attach a photo :c")
 
