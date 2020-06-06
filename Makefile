@@ -14,4 +14,8 @@ sql:
 tokens:
 	git update-index --assume-unchanged tokens.py
 
+.PHONY: secret_url
+secret_url:
+	python -c "import secrets;print(secrets.token_hex(16))"
+
 .DEFAULT_GOAL := build

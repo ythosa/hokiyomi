@@ -16,7 +16,8 @@ vk = vk_session.get_api()
 confirmation_code = CONFIRMATION_CODE
 
 
-@app.route('/my_bot', methods=['POST'])
+# Use make secret URL
+@app.route('/c4d43fbe6c0a0d31fb809eda7dc94162', methods=['POST'])
 def bot():
     data = request.get_json(force=True, silent=True)
 
