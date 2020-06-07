@@ -78,7 +78,7 @@ async def generate_news_paper(message: types.Message):
     chat_id = message.chat.id
     title = message.text[5:]
     commands.get_wall_newspaper(chat_id, title)
-    await bot.send_photo(chat_id, open('./output/output.jpg', 'rb'), 'Have fun :3')
+    await bot.send_photo(chat_id, open('./output/greeting_card.png', 'rb'), 'Have fun :3')
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
