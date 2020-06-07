@@ -21,6 +21,9 @@
 ## Description
 -    So cute and funny Telegram bot :3
 -    ML models developer: https://github.com/oringik
+-    Models links:
+        * cutimage: https://github.com/Oringik/cutimage
+        * paper: https://github.com/Oringik/paper
 
 
 ## FAQ
