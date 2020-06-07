@@ -19,9 +19,10 @@ dp = Dispatcher(bot)
 async def send_welcome(message: types.Message):
     """Sends a welcome message and help on the bot"""
     await message.answer(
-        "Cute & funny bot for creating a wall newspaper with your friends\n\n"
-        "Add a wall newspaper element: /add\n"
-        "Generate a wall newspaper: /generate\n"
+        "Cute & funny bot for creating a "
+        "\nwall newspaper with your friends :3\n\n"
+        "Add a wall newspaper element: /add <picture> <caption>\n"
+        "Generate a wall newspaper: /generate <title>\n"
         "Remove last added element: /remove_last\n"
         "Get list of backgrounds: /bg\n"
     )
@@ -71,11 +72,12 @@ async def remove_last_element(message: types.Message):
     await message.answer(message_answer)
 
 
-@dp.message_handler(commands=['gen', 'generate'])
+@dp.message_handler(lambda message: message.text.startswith('/gen '))
 async def generate_news_paper(message: types.Message):
     """Send generated wall newspaper"""
     chat_id = message.chat.id
-    # TODO ... generate photo
+    title = message.text[5:]
+    # commands.get_wall_newspaper(chat_id, title)
     await bot.send_photo(chat_id, open('./output/output.jpg', 'rb'), 'Have fun :3')
 
 if __name__ == '__main__':
