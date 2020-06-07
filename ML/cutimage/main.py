@@ -109,4 +109,8 @@ def cli(image, background, output_path):
         segment(dlab, image, background, output_path, show_orig=False)
         click.echo("Successfully!")
         return
-    click.echo("Image, output path and background is neccessery params")
+    click.echo("Image, output path and background is necessary params")
+
+
+if __name__ == '__main__':
+    cli()

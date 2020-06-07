@@ -79,12 +79,13 @@ def get_wall_newspaper(chat_id, title):
                 f.write(p['image'])
 
             subprocess.run(
-                f'cutimage --image {fname} --background ./backgrounds/{bg}.jpg '
-                f'--output_path ./output/{fname}.jpg', shell=True
+                f'python ./ML/cutimage/main.py --image {fname} --background ./backgrounds/{bg}.jpg '
+                f'--output_path ./output/{fname}', shell=True
             )
 
-    gen_wns_command = f"papper --title '{title}' "
+    gen_wns_command = f"./ML/paper/main.py --title '{title}' --bg ./ML/paper/gazette.jpg"
     for p in paths:
+        p['name'] = p['name'][:-4] + '.png'
         gen_wns_command += f"--images {p['name']} --descs {p['desc']} "
 
     subprocess.run(gen_wns_command, shell=True)

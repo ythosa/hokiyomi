@@ -70,3 +70,7 @@ def cli(title, images, descs):
         print(images[i])
         add_new_layer(images[i], descs[i])
         i = i + 1
+
+
+if __name__ == '__main__':
+    cli()
