@@ -83,7 +83,7 @@ def get_wall_newspaper(chat_id, title):
                 f'--output_path ./output/{fname}', shell=True
             )
 
-    gen_wns_command = f"python ./ML/paper/main.py --title '{title}' --bg ./ML/paper/gazette.jpg"
+    gen_wns_command = f"python ./ML/paper/main.py --title '{title}' --bg ./ML/paper/gazette.jpg "
     for p in paths:
         p['name'] = p['name'][:-4] + '.png'
         gen_wns_command += f"--images {p['name']} --descs {p['desc']} "
