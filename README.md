@@ -19,7 +19,7 @@
 
 
 ## Description
--    So cute and funny VK bot :3
+-    So cute and funny Telegram bot :3
 -    ML models developer: https://github.com/oringik
 
 
