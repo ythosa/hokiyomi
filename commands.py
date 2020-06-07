@@ -64,10 +64,16 @@ def get_wall_newspaper(chat_id, title):
     """Generate wall newspaper for chat by using ML models"""
     pics = db.fetchall('images', 'group_id, image, caption, group_id'.split(', '))
     paths = []
+    k = 0
     for p in pics:
         if p['group_id'] == chat_id:
             fname = f'./toml/{k}.jpg'
-            paths.append(fname)
+            caption = p['caption']
+            k += 1
+            paths.append({
+                'name': fname,
+                'desc': caption
+            })
             bg = p['bg']
             with open(fname, 'wb') as f:
                 f.write(p['image'])
@@ -77,10 +83,8 @@ def get_wall_newspaper(chat_id, title):
                 f'--output_path ./output/{fname}.jpg', shell=True
             )
 
-    gen_wns_command = f"papper --title '{title}' " \
-        f"--images unnamed.png --images FullSizeRender-18-09-17-11-43.jpg --descs 'any' --descs 'school'"
+    gen_wns_command = f"papper --title '{title}' "
     for p in paths:
-        gen_wns_command += f'--images {p} '
+        gen_wns_command += f"--images {p['name']} --descs {p['desc']} "
 
     subprocess.run(gen_wns_command, shell=True)
-

@@ -77,7 +77,7 @@ async def generate_news_paper(message: types.Message):
     """Send generated wall newspaper"""
     chat_id = message.chat.id
     title = message.text[5:]
-    # commands.get_wall_newspaper(chat_id, title)
+    commands.get_wall_newspaper(chat_id, title)
     await bot.send_photo(chat_id, open('./output/output.jpg', 'rb'), 'Have fun :3')
 
 if __name__ == '__main__':
