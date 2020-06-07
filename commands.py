@@ -17,8 +17,8 @@ def add_person_picture(path, group_id, caption, bg):
     db.insert("images", {
         "group_id": group_id,
         "caption": caption,
+        "bg": bg,
         "image": pic,
-        "bg": bg
     })
 
     if not pic:
